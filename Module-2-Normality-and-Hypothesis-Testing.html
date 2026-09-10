@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 2: Diagnosing Normality &amp; Hypothesis Testing — Statistics for Psychology</title>
+<style>
+:root{
+  --ink:#15202b; --ink-soft:#42536b; --ink-faint:#7b8ba3;
+  --paper:#fdfcfa; --panel:#ffffff; --line:#e2e0da;
+  --accent:#9c4221; --accent-soft:#fdf3ee; --accent-line:#e8c3ae;
+  --teal:#1b6b6b; --teal-soft:#eef7f6;
+  --gold:#8a6d1f; --gold-soft:#fbf5e3;
+  --plum:#5b3a76; --plum-soft:#f4eefa;
+  --ok:#1f6b3f; --ok-soft:#ecf6f0;
+  --no:#9b2c2c; --no-soft:#fbeeee;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--sans); color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased; line-height:1.6}
+
+#bar{position:fixed; top:0; left:0; right:0; height:52px; z-index:200;
+  background:rgba(253,252,250,.94); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line); display:flex; align-items:center; gap:14px; padding:0 16px}
+#bar .brand{font-family:var(--serif); font-weight:600; font-size:15px; white-space:nowrap}
+#bar .brand small{display:block; font-family:var(--sans); font-size:10.5px; color:var(--ink-faint); letter-spacing:.08em; text-transform:uppercase; font-weight:600}
+#bar .spacer{flex:1}
+.modeswitch{display:flex; border:1px solid var(--line); border-radius:7px; overflow:hidden; background:#fff}
+.modeswitch button{font:inherit; font-size:12.5px; font-weight:600; border:0; background:transparent; padding:7px 14px; cursor:pointer; color:var(--ink-soft)}
+.modeswitch button.on{background:var(--ink); color:#fff}
+#searchwrap{position:relative}
+#search{font:inherit; font-size:13px; padding:7px 11px 7px 30px; width:190px; border:1px solid var(--line); border-radius:7px; background:#fff; color:var(--ink)}
+#search:focus{outline:2px solid var(--accent-line); outline-offset:-1px; width:250px}
+#searchwrap::before{content:"⌕"; position:absolute; left:10px; top:5px; font-size:15px; color:var(--ink-faint)}
+.iconbtn{font:inherit; font-size:12.5px; font-weight:600; border:1px solid var(--line); background:#fff; color:var(--ink-soft); border-radius:7px; padding:7px 11px; cursor:pointer}
+.iconbtn:hover{border-color:var(--ink-faint); color:var(--ink)}
+.iconbtn.on{background:var(--gold-soft); border-color:var(--gold); color:var(--gold)}
+
+#side{position:fixed; top:52px; bottom:0; left:0; width:262px; z-index:150;
+  border-right:1px solid var(--line); background:#faf8f5; overflow-y:auto; padding:16px 0 40px}
+#side h4{font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--ink-faint); margin:0 0 8px; padding:0 18px; font-weight:700}
+#toc{list-style:none; margin:0; padding:0}
+#toc li a{display:block; padding:7px 18px; font-size:13.2px; color:var(--ink-soft); text-decoration:none; border-left:3px solid transparent; line-height:1.35}
+#toc li a:hover{background:#f2efe9; color:var(--ink)}
+#toc li a.active{border-left-color:var(--accent); color:var(--accent); background:var(--accent-soft); font-weight:600}
+#toc li a .n{color:var(--ink-faint); font-variant-numeric:tabular-nums; margin-right:7px; font-size:11.5px}
+.sidenote{margin:18px 18px 0; padding:12px 13px; background:#fff; border:1px solid var(--line); border-radius:8px; font-size:11.7px; color:var(--ink-soft); line-height:1.5}
+.sidenote b{color:var(--ink); display:block; margin-bottom:5px; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase}
+.sidenote kbd{font-family:var(--sans); font-size:10.5px; background:#f1efe9; border:1px solid var(--line); border-bottom-width:2px; border-radius:4px; padding:1px 5px; margin-right:2px}
+
+#main{margin-left:262px; padding:52px 0 0}
+.wrap{max-width:820px; margin:0 auto; padding:0 40px}
+section.sec{padding:54px 0; border-bottom:1px solid var(--line)}
+section.sec:last-child{border-bottom:0; padding-bottom:120px}
+.eyebrow{font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:10px}
+h1{font-family:var(--serif); font-size:44px; line-height:1.12; margin:0 0 16px; font-weight:600; letter-spacing:-.015em}
+h2{font-family:var(--serif); font-size:31px; line-height:1.2; margin:0 0 16px; font-weight:600; letter-spacing:-.01em}
+h3{font-size:15.5px; margin:26px 0 9px; font-weight:700}
+p{margin:0 0 14px; font-size:16px; color:var(--ink-soft)}
+.lede{font-size:18.5px; color:var(--ink); line-height:1.55}
+strong{color:var(--ink); font-weight:650}
+ul,ol{margin:0 0 14px; padding-left:22px; font-size:16px; color:var(--ink-soft)}
+li{margin-bottom:7px}
+a{color:var(--accent)}
+.key{border-left:3px solid var(--accent); background:var(--accent-soft); padding:16px 20px; margin:20px 0; border-radius:0 8px 8px 0}
+.key p{margin:0; color:var(--ink); font-size:16.5px}
+.key .lbl{font-size:10px; letter-spacing:.13em; text-transform:uppercase; font-weight:700; color:var(--accent); margin-bottom:6px}
+.key.t{border-left-color:var(--teal); background:var(--teal-soft)}
+.key.t .lbl{color:var(--teal)}
+
+
+.cols{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:20px 0}
+.cols3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin:20px 0}
+.card{border:1px solid var(--line); border-radius:10px; padding:18px 19px; background:var(--panel)}
+.card h4{margin:0 0 8px; font-size:14.5px; font-weight:700}
+.card p{font-size:14.5px; margin-bottom:8px}
+.card p:last-child{margin-bottom:0}
+.card ul{font-size:14.5px; margin-bottom:0}
+.card.a{border-color:var(--accent-line); background:var(--accent-soft)}
+.card.t{border-color:#bcdad6; background:var(--teal-soft)}
+.card.g{border-color:#e0d09a; background:var(--gold-soft)}
+.card.p{border-color:#d8c6e8; background:var(--plum-soft)}
+
+.video{border:1px solid var(--line); border-radius:11px; padding:18px 20px; margin:20px 0;
+  background:linear-gradient(180deg,#fff,#fbfaf7); display:flex; gap:16px; align-items:flex-start}
+.video .play{flex:0 0 44px; height:44px; border-radius:50%; background:var(--accent); color:#fff; display:flex; align-items:center; justify-content:center; font-size:15px; margin-top:2px}
+.video h4{margin:0 0 3px; font-size:15.5px}
+.video .meta{font-size:12.5px; color:var(--ink-faint); margin:0 0 8px}
+.video p{font-size:14.5px; margin:0 0 9px}
+.video a.btn{display:inline-block; font-size:12.5px; font-weight:650; text-decoration:none; background:var(--ink); color:#fff; padding:7px 14px; border-radius:6px}
+.video a.btn:hover{background:var(--accent)}
+
+.demo{border:1px solid var(--line); border-radius:11px; margin:22px 0; background:var(--panel); overflow:hidden}
+.demo > header{padding:11px 17px; background:#f7f5f1; border-bottom:1px solid var(--line);
+  font-size:11px; letter-spacing:.11em; text-transform:uppercase; font-weight:700; color:var(--ink-soft);
+  display:flex; align-items:center; justify-content:space-between; gap:10px}
+.demo > header .hint{text-transform:none; letter-spacing:0; font-weight:500; font-size:12px; color:var(--ink-faint)}
+.demo .pad{padding:20px}
+.btn{font:inherit; font-size:13.5px; font-weight:600; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:7px; padding:8px 15px; cursor:pointer}
+.btn:hover{border-color:var(--ink-faint)}
+.btn.solid{background:var(--ink); color:#fff; border-color:var(--ink)}
+.btn.solid:hover{background:var(--accent); border-color:var(--accent)}
+.btn.sm{font-size:12.5px; padding:6px 12px}
+
+.fb{margin-top:12px; font-size:14.2px; padding:12px 15px; border-radius:8px; display:none; line-height:1.55}
+.fb.show{display:block}
+.fb.y{background:var(--ok-soft); border:1px solid #b9dcc7; color:#1c4d33}
+.fb.n{background:var(--no-soft); border:1px solid #ecc3c3; color:#7a2626}
+
+/* pick-buttons */
+.opts{display:flex; gap:8px; flex-wrap:wrap}
+.opts button{font:inherit; font-size:13px; font-weight:600; border:1px solid var(--line); background:#fff; color:var(--ink-soft); border-radius:20px; padding:6px 15px; cursor:pointer; transition:all .15s}
+.opts button:hover:not(:disabled){border-color:var(--ink-faint); color:var(--ink)}
+.opts button:disabled{cursor:default}
+.opts button.right{background:var(--ok-soft); border-color:var(--ok); color:var(--ok)}
+.opts button.wrong{background:var(--no-soft); border-color:var(--no); color:var(--no)}
+.q-item{border-top:1px solid var(--line); padding:16px 0}
+.q-item:first-child{border-top:0; padding-top:0}
+.q-text{font-size:15.5px; color:var(--ink); margin:0 0 11px}
+.q-text .num{color:var(--ink-faint); font-variant-numeric:tabular-nums; margin-right:8px; font-size:13px}
+.q-sub{font-size:12.5px; color:var(--ink-faint); font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin:12px 0 7px}
+
+#score,.scorebar-wrap{display:flex; align-items:center; gap:14px; padding:14px 18px; background:#f7f5f1; border-top:1px solid var(--line); font-size:14px; color:var(--ink-soft)}
+.scorebar-wrap b{font-size:20px; color:var(--ink); font-variant-numeric:tabular-nums; font-family:var(--serif)}
+.sbar{flex:1; height:7px; background:#e6e3dc; border-radius:5px; overflow:hidden; min-width:70px}
+.sfill{height:100%; width:0; background:var(--ok); transition:width .4s}
+
+/* tabs (kurtosis / skew) */
+.tabs{display:grid; gap:11px; margin:0 0 18px}
+.tabs.t3{grid-template-columns:repeat(3,1fr)}
+.tab{border:2px solid var(--line); border-radius:10px; padding:14px 12px; cursor:pointer; background:#fff; text-align:center; font:inherit; transition:all .18s}
+.tab:hover{border-color:var(--ink-faint)}
+.tab.on{border-color:var(--accent); background:var(--accent-soft)}
+.tab .nm{font-size:14px; font-weight:700; display:block}
+.tab .sub{font-size:11.5px; color:var(--ink-faint); display:block; margin-top:2px}
+.panelout{border:1px solid var(--line); border-radius:10px; padding:19px 21px; background:#fbfaf7; min-height:120px}
+.panelout h4{margin:0 0 9px; font-size:16px}
+.panelout p{margin:0 0 10px}
+.panelout p:last-child{margin:0}
+
+/* curve svg */
+.curvebox{background:#fff; border:1px solid var(--line); border-radius:10px; padding:8px}
+svg.curve{display:block; width:100%; height:auto}
+.bandlab{font:600 11px var(--sans); fill:var(--ink-soft)}
+.axlab{font:600 12px var(--sans); fill:var(--ink-faint)}
+.pctlab{font:700 13px var(--sans); fill:var(--ink)}
+.bandbtn{cursor:pointer}
+.bandbtn:hover .bandfill{opacity:.85}
+
+.legend{display:flex; gap:16px; font-size:12px; color:var(--ink-faint); margin-top:10px; flex-wrap:wrap}
+.legend span{display:flex; align-items:center; gap:6px}
+.legend i{width:11px; height:11px; border-radius:2px; display:inline-block}
+
+/* p-value buckets */
+.chips{display:flex; gap:9px; flex-wrap:wrap; margin-bottom:18px; min-height:42px}
+.chip{font:inherit; font-size:15px; font-weight:700; font-variant-numeric:tabular-nums;
+  border:2px solid var(--line); background:#fff; color:var(--ink); border-radius:8px; padding:8px 14px; cursor:pointer; transition:all .15s}
+.chip:hover:not(:disabled){border-color:var(--accent); transform:translateY(-2px)}
+.chip.sel{border-color:var(--accent); background:var(--accent-soft)}
+.chip:disabled{opacity:.35; cursor:default}
+.buckets{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+.bucket{border:2px dashed var(--line); border-radius:12px; padding:16px; min-height:130px; cursor:pointer; transition:all .18s; background:#fff}
+.bucket:hover{border-color:var(--accent)}
+.bucket h4{margin:0 0 3px; font-size:14.5px; text-align:center}
+.bucket .cond{font-size:12.5px; color:var(--ink-faint); text-align:center; margin:0 0 11px; font-variant-numeric:tabular-nums}
+.bucket .drop{display:flex; gap:7px; flex-wrap:wrap; justify-content:center}
+.bucket .drop span{font-size:13.5px; font-weight:700; font-variant-numeric:tabular-nums; border-radius:6px; padding:4px 10px}
+.bucket .drop span.ok{background:var(--ok-soft); color:var(--ok); border:1px solid #b9dcc7}
+.bucket .drop span.bad{background:var(--no-soft); color:var(--no); border:1px solid #ecc3c3; text-decoration:line-through}
+.bucket.sig{border-color:#e0c060; background:#fffdf5}
+.bucket.ns{border-color:#9db9d6; background:#f7fafd}
+
+/* hypothesis builder */
+.hb input{width:100%; font:inherit; font-size:15px; padding:11px 13px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink)}
+.hb input:focus{outline:2px solid var(--accent-line); outline-offset:-1px}
+.hb .out{margin-top:16px; display:grid; gap:11px}
+.hb .hrow{border:1px solid var(--line); border-radius:9px; padding:14px 16px; background:#fbfaf7}
+.hb .hrow .tag{font-family:var(--serif); font-size:19px; color:var(--accent); font-weight:600; margin-right:10px}
+.hb .hrow .txt{font-size:15.5px; color:var(--ink)}
+.hb .hrow.null{background:var(--plum-soft); border-color:#d8c6e8}
+.hb .hrow.null .tag{color:var(--plum)}
+
+/* variability demo */
+.varrow{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:6px}
+.varrow input[type=range]{flex:1; min-width:170px; accent-color:var(--accent)}
+.varrow .vlab{font-variant-numeric:tabular-nums; font-weight:700; font-size:17px; min-width:56px; text-align:right; color:var(--accent)}
+
+table.tbl{width:100%; border-collapse:collapse; font-size:14.5px; margin:16px 0}
+table.tbl th{text-align:left; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); padding:0 12px 8px; border-bottom:1px solid var(--line); font-weight:700}
+table.tbl td{padding:11px 12px; border-bottom:1px solid var(--line); color:var(--ink-soft); vertical-align:top}
+table.tbl td.k{color:var(--ink); font-weight:650; width:110px}
+table.tbl tr:hover td{background:#faf8f5}
+
+mark{background:#fdf0b8; color:var(--ink); padding:0 2px; border-radius:2px}
+.dimmed{opacity:.25}
+
+body.present #side{transform:translateX(-100%)}
+body.present #main{margin-left:0}
+body.present .wrap{max-width:1120px; padding:0 60px}
+body.present section.sec{display:none; border:0; min-height:calc(100vh - 52px); padding:44px 0 96px}
+body.present section.sec.live{display:block; animation:fade .32s ease}
+@keyframes fade{from{opacity:0; transform:translateY(9px)}to{opacity:1; transform:none}}
+body.present h1{font-size:60px}
+body.present h2{font-size:44px; margin-bottom:22px}
+body.present h3{font-size:20px; margin-top:30px}
+body.present p{font-size:21px; line-height:1.55}
+body.present .lede{font-size:25px}
+body.present ul,body.present ol{font-size:21px}
+body.present li{margin-bottom:11px}
+body.present .key p{font-size:23px}
+body.present .card p,body.present .card ul{font-size:17.5px}
+body.present .card h4{font-size:17.5px}
+body.present .q-text{font-size:20px}
+body.present .opts button{font-size:16px; padding:9px 20px}
+body.present .fb{font-size:17px}
+body.present .chip{font-size:19px; padding:10px 18px}
+body.present .bucket h4{font-size:17.5px}
+body.present .tab .nm{font-size:16.5px}
+body.present table.tbl td{font-size:17.5px}
+body.present .video h4{font-size:20px}
+body.present .video p{font-size:17px}
+body.present .hb .hrow .txt{font-size:19px}
+#pnav{display:none; position:fixed; bottom:0; left:0; right:0; height:44px; z-index:180;
+  background:rgba(253,252,250,.95); backdrop-filter:blur(10px); border-top:1px solid var(--line);
+  align-items:center; justify-content:center; gap:16px; font-size:12.5px; color:var(--ink-faint)}
+body.present #pnav{display:flex}
+#pnav button{font:inherit; font-size:16px; line-height:1; border:1px solid var(--line); background:#fff; color:var(--ink); border-radius:6px; padding:5px 13px; cursor:pointer}
+#pnav button:hover{background:var(--ink); color:#fff; border-color:var(--ink)}
+#pnav .lbl{font-weight:600; color:var(--ink-soft); max-width:340px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+#prog{position:fixed; top:52px; left:0; height:2px; background:var(--accent); z-index:190; width:0; transition:width .3s; display:none}
+body.present #prog{display:block}
+
+@media (max-width:1000px){
+  #side{transform:translateX(-100%)}
+  #main{margin-left:0}
+  .cols,.cols3,.buckets,.tabs.t3{grid-template-columns:1fr}
+  .wrap{padding:0 22px}
+  h1{font-size:33px} h2{font-size:26px}
+}
+@media print{#bar,#side,#pnav,#prog{display:none} #main{margin:0} section.sec{break-after:page}}
+</style>
+</head>
+<body>
+
+<div id="bar">
+  <div class="brand">Module 2 · Normality &amp; Hypothesis Testing<small>Statistics for Psychology · Prof. Ouellette</small></div>
+  <div class="spacer"></div>
+  <div id="searchwrap"><input id="search" type="search" placeholder="Search this module…" autocomplete="off"></div>
+  <div class="modeswitch"><button id="mStudy" class="on">Study</button><button id="mPresent">Present</button></div>
+</div>
+<div id="prog"></div>
+
+<nav id="side">
+  <h4>Contents</h4>
+  <ul id="toc"></ul>
+  <div class="sidenote">
+    <b>Present mode</b>
+    <kbd>←</kbd><kbd>→</kbd> move between sections<br>
+    <kbd>F</kbd> fullscreen · <kbd>Esc</kbd> back to study
+  </div>
+  <div class="sidenote">
+    <b>Study mode</b>
+    Everything on one page. Work through the activities — they’ll tell you fast which parts you’ve actually got.
+  </div>
+</nav>
+
+<main id="main"><div class="wrap">
+
+<!-- 1 TITLE -->
+<section class="sec" data-title="Module 2 overview">
+  <div class="eyebrow">Statistics for Psychology · Module 2</div>
+  <h1>Diagnosing Normality in Data<br>&amp; Hypothesis Testing</h1>
+  <p class="lede">When you get a data set, the first thing you do is explore it. A big part of that is finding out whether your data is distributed normally — and you're always looking at the <strong>dependent variable</strong>.</p>
+  <p style="font-size:14.5px; color:var(--ink-faint); margin-top:-4px">Prof. Lindsay Ouellette</p>
+
+  <div class="cols">
+    <div class="card t">
+      <h4>Part 1 — Diagnosing normality</h4>
+      <ul>
+        <li>Independent and dependent variables</li>
+        <li>The normal distribution</li>
+        <li>Standard deviations and reading the curve</li>
+        <li>Skew and kurtosis</li>
+        <li>Choosing a measure of central tendency</li>
+      </ul>
+    </div>
+    <div class="card g">
+      <h4>Part 2 — Hypothesis testing</h4>
+      <ul>
+        <li>Null and alternative hypotheses</li>
+        <li>Doing the opposite</li>
+        <li>The <em>p</em> value and the .05 benchmark</li>
+        <li>Reject vs. fail to reject</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">Where this is heading</div>
+    <p>By the end, you should be able to state the null and alternative hypothesis for <strong>your own research question</strong> — the one from your final paper topic.</p>
+  </div>
+
+</section>
+
+<!-- 2 REVIEW -->
+<section class="sec" data-title="Where we left off">
+  <div class="eyebrow">Review</div>
+  <h2>Where we left off</h2>
+  <p class="lede">Module 1, in one screen.</p>
+
+  <div class="cols">
+    <div class="card">
+      <h4>What is statistics?</h4>
+      <p>A discipline, a set of methods, the data itself, and the calculated figures. Most importantly: a <strong>method of inquiry</strong> — a way of thinking.</p>
+    </div>
+    <div class="card">
+      <h4>Branches of statistics</h4>
+      <p><strong>Descriptive</strong> — summarizing the sample you have (the results section). <strong>Inferential</strong> — what you can conclude about the population (the discussion section).</p>
+    </div>
+    <div class="card">
+      <h4>Levels of measurement</h4>
+      <p><strong>N O I R</strong> — nominal, ordinal, interval, ratio. The dividing line between interval and ratio is an absolute zero.</p>
+    </div>
+    <div class="card">
+      <h4>Measures of central tendency</h4>
+      <p>Mean, median, mode — plus the range. The typical or most representative value of a group of scores.</p>
+    </div>
+  </div>
+
+  <div class="key t">
+    <div class="lbl">Carrying forward</div>
+    <p>Central tendency comes back immediately this week — but now paired with its other half, <strong>variability</strong>. Levels of measurement come back too, because they decide <em>which</em> measure of central tendency you're allowed to use.</p>
+  </div>
+</section>
+
+<!-- 3 IV / DV -->
+<section class="sec" data-title="Independent &amp; dependent variables">
+  <div class="eyebrow">Review, but load-bearing</div>
+  <h2>Independent and dependent variables</h2>
+  <p class="lede">You'll have met these before — but everything this module does depends on knowing which is which, so let's be precise.</p>
+
+  <div class="cols">
+    <div class="card a">
+      <h4>Independent Variable</h4>
+      <p style="font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:700; margin-bottom:9px">aka the Manipulated Variable</p>
+      <ul>
+        <li>Typically the variable the <strong>researcher controls</strong></li>
+        <li>Think of it as the <strong>intervention</strong></li>
+        <li>Can potentially explain differences in the outcome you're interested in</li>
+      </ul>
+    </div>
+    <div class="card t">
+      <h4>Dependent Variable</h4>
+      <p style="font-size:12.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-faint); font-weight:700; margin-bottom:9px">aka the Measured Variable</p>
+      <ul>
+        <li>The variable whose <strong>levels are observed</strong></li>
+        <li>The <strong>outcome</strong></li>
+        <li>Something the researcher measures but doesn't directly control</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>An example from clinical work</h3>
+  <p>Say you're studying levels of depression and you're using the <strong>Beck Depression Inventory</strong>. The BDI scores are your dependent variable. You control <em>how you administer</em> the BDI — but you can't control what people score. That's the distinction.</p>
+
+  <div class="key">
+    <div class="lbl">Why it matters right now</div>
+    <p>When you ask “is my data normally distributed?”, you are asking it about the <strong>dependent variable</strong>. Always. That's the outcome, and the outcome is what your results are made of.</p>
+  </div>
+
+</section>
+
+<!-- 4 IV/DV DRILL -->
+<section class="sec" data-title="Activity: Name the IV and DV">
+  <div class="eyebrow">Check yourself</div>
+  <h2>Name the IV and the DV</h2>
+  <p class="lede">Three scenarios. Pick the independent variable, then the dependent variable.</p>
+
+  <div class="demo">
+    <header><span>Activity · IV and DV</span><span class="hint">Two picks each</span></header>
+    <div class="pad" id="ivdv"></div>
+    <div class="scorebar-wrap">
+      <span>Correct <b id="ivdvN">0</b> / <span id="ivdvT">6</span></span>
+      <div class="sbar"><div class="sfill" id="ivdvFill"></div></div>
+      <button class="btn sm" id="ivdvReset">Reset</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- 5 NORMAL DISTRIBUTION -->
+<section class="sec" data-title="The normal distribution">
+  <div class="eyebrow">Part 1 · Diagnosing normality</div>
+  <h2>The normal distribution</h2>
+  <p class="lede">Q: How is my data distributed?</p>
+
+  <h3>Where it came from</h3>
+  <p>It's more or less a three-way tie between <strong>Abraham de Moivre</strong>, <strong>Carl Friedrich Gauss</strong>, and <strong>Pierre-Simon Laplace</strong>. That kind of near-simultaneous discovery happened a lot in this period — no social media, no news wire, so people arrived at the same pattern independently and around the same time.</p>
+  <p>What they were all doing was measuring natural phenomena — height, the size of apples in an orchard — and they kept finding the same shape: <strong>the majority of values hover around a center value.</strong></p>
+
+  <div class="video">
+    <div class="play">▶</div>
+    <div>
+      <h4>The Normal Distribution</h4>
+      <p class="meta">Short explainer</p>
+      <p>Covers why it's called a bell curve, and the properties that follow from the shape.</p>
+      <a class="btn" href="https://www.youtube.com/watch?v=DJzmb7hGmeM" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+    </div>
+  </div>
+
+  <h3>What the shape gives you</h3>
+  <div class="cols">
+    <div class="card t">
+      <h4>Mean = median = mode</h4>
+      <p>When data is distributed normally, all three land in the same place. And the curve has exactly one mode.</p>
+    </div>
+    <div class="card t">
+      <h4>It's symmetric</h4>
+      <p>Draw a vertical line at the mean and you get two mirror images.</p>
+    </div>
+    <div class="card a">
+      <h4>The mean tells you where</h4>
+      <p>Know the mean and you know the center — the proverbial top of the bell.</p>
+    </div>
+    <div class="card a">
+      <h4>The SD tells you how wide</h4>
+      <p>Know the standard deviation and you know how spread out the curve is. Larger SD, wider bell.</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">Everyday examples</div>
+    <p>Measure the height of everyone at your university and most people are of average height — most values sit in the middle, with the very tall and very short at the extremes. The same happens with shoe size, and with IQ.</p>
+  </div>
+
+</section>
+
+<!-- 6 ANATOMY -->
+<section class="sec" data-title="Reading the curve">
+  <div class="eyebrow">Part 1 · Diagnosing normality</div>
+  <h2>Reading the curve</h2>
+  <p class="lede">The center is the mean. Everything else is measured in <strong>standard deviations</strong> away from it.</p>
+
+  <div class="demo">
+    <header><span>The normal curve</span><span class="hint">Click a band</span></header>
+    <div class="pad">
+      <div class="curvebox"><div id="curveHost"></div></div>
+      <div id="curveOut" class="fb show" style="background:#fbfaf7; border:1px solid var(--line); color:var(--ink-soft); margin-top:14px">
+        Click any shaded band to see what proportion of your data falls there.
+      </div>
+      <div style="display:flex; gap:9px; flex-wrap:wrap; margin-top:14px">
+        <button class="btn sm" id="show68">Show ±1 SD (68.2%)</button>
+        <button class="btn sm" id="show95">Show ±2 SD (95.4%)</button>
+        <button class="btn sm" id="showAll">Show all bands</button>
+      </div>
+    </div>
+  </div>
+
+  <h3>How to read the numbers</h3>
+  <ul>
+    <li><strong>34.1%</strong> of values lie within one standard deviation <em>above</em> the mean, and <strong>34.1%</strong> within one standard deviation <em>below</em>.</li>
+    <li><strong>13.6%</strong> lie between one and two standard deviations above; another <strong>13.6%</strong> between one and two below.</li>
+    <li>Negative numbers always mean <em>below</em> the mean. Positive numbers mean <em>above</em>.</li>
+  </ul>
+
+  <div class="key">
+    <div class="lbl">The two numbers to remember</div>
+    <p><strong>68.2%</strong> of all values lie within one standard deviation of the mean.<br><strong>95.4%</strong> of all values lie within two standard deviations of the mean.</p>
+  </div>
+
+  <h3>Made concrete</h3>
+  <p>Measure the height of a thousand people. About <strong>950 of them</strong> will fall within two standard deviations of the mean. Above two standard deviations you have the really, really tall people; below, the really, really short. Those tails are your outliers.</p>
+  <p>Which is the whole idea: in nature, things tend toward an average, and the numbers hover around that average — <em>when the data is normally distributed.</em></p>
+
+</section>
+
+<!-- 7 SKEW -->
+<section class="sec" data-title="When data isn't normal: skew">
+  <div class="eyebrow">Part 1 · Diagnosing normality</div>
+  <h2>Not all data is normal</h2>
+  <p class="lede">Sometimes the hump slides off to one side and the data is <strong>skewed</strong>.</p>
+
+  <div class="demo">
+    <header><span>Activity · Left skew or right skew?</span><span class="hint">Follow the tail</span></header>
+    <div class="pad" id="skewGame"></div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">The trick that always works</div>
+    <p><strong>Which direction is the tail going?</strong> Tail points left, it's left skewed. Tail points right, it's right skewed. That's it — don't overthink the hump.</p>
+  </div>
+
+  <h3>The classic example</h3>
+  <p>Income. The majority of incomes sit within a certain range, and then you have a handful of extremely wealthy outliers pulling one tail out a long way. That's a skewed distribution, and it's why the mean income and the median income of a city can be so far apart.</p>
+
+</section>
+
+<!-- 8 CHOOSING CENTRAL TENDENCY -->
+<section class="sec" data-title="Choosing a measure of central tendency">
+  <div class="eyebrow">Part 1 · Diagnosing normality</div>
+  <h2>Choosing a measure of central tendency</h2>
+  <p class="lede">There are pros and cons to each — but there are also standard, expected ways of using them.</p>
+
+  <div class="cols3">
+    <div class="card a">
+      <h4>Mean</h4>
+      <p>Best choice when there are <strong>no extreme values</strong>. Very popular, used constantly in psychology research.</p>
+    </div>
+    <div class="card t">
+      <h4>Median</h4>
+      <p>Best choice when there <strong>are extreme values</strong>. Use it with rank-ordered variables and whenever outliers are present.</p>
+    </div>
+    <div class="card g">
+      <h4>Mode</h4>
+      <p>Best for identifying the <strong>most characteristic value</strong>. Use it with nominal variables.</p>
+    </div>
+  </div>
+
+  <h3>Why outliers matter</h3>
+  <p>Extreme values drag the mean up or down. Imagine the average income in Philadelphia is $50,000 — a million people earning around that. Now add a thousand people earning $5 or $10 million. Fold those into the average and suddenly it looks like the typical Philadelphian earns $80,000.</p>
+  <p>Nobody's income changed. The <em>measure</em> just stopped describing the typical person. That's why income is almost always reported as a <strong>median</strong>.</p>
+
+  <h3>Matching the measure to the level of measurement</h3>
+  <table class="tbl">
+    <thead><tr><th>Use this</th><th>With this kind of data</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Mean</td><td>Ratio / Interval</td><td>Equal-interval variables — the arithmetic is meaningful</td></tr>
+      <tr><td class="k">Median</td><td>Ordinal</td><td>Rank-ordered variables, and any distribution with outliers</td></tr>
+      <tr><td class="k">Mode</td><td>Nominal</td><td>Categories can't be averaged or ranked — you can only count them</td></tr>
+    </tbody>
+  </table>
+
+  <div class="demo">
+    <header><span>Activity · Which measure would you report?</span><span class="hint">Pick one</span></header>
+    <div class="pad" id="ctGame"></div>
+    <div class="scorebar-wrap">
+      <span>Correct <b id="ctN">0</b> / <span id="ctT">5</span></span>
+      <div class="sbar"><div class="sfill" id="ctFill"></div></div>
+      <button class="btn sm" id="ctReset">Reset</button>
+    </div>
+  </div>
+
+</section>
+
+<!-- 9 VARIABILITY -->
+<section class="sec" data-title="Center and spread: variability">
+  <div class="eyebrow">Part 1 · Diagnosing normality</div>
+  <h2>Center and spread</h2>
+  <p class="lede">Central tendency is only half the story. The other half is <strong>variability</strong> — how spread out or close together the scores are.</p>
+
+  <div class="key t">
+    <div class="lbl">Standard Deviation (SD)</div>
+    <p>Describes the <strong>variability</strong> of the data. Small SD, scores clustered tight around the mean. Large SD, scores scattered wide.</p>
+  </div>
+
+  <div class="video">
+    <div class="play">▶</div>
+    <div>
+      <h4>Central Tendency and Variability</h4>
+      <p class="meta">Longer explainer</p>
+      <p>Works through why the two have to be read together — including the basketball players, the horse jockeys, and the restaurant you can't predict.</p>
+      <a class="btn" href="https://www.youtube.com/watch?v=YUdq7QVeQEI" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+    </div>
+  </div>
+
+  <div class="demo">
+    <header><span>Same mean, different spread</span><span class="hint">Drag the slider</span></header>
+    <div class="pad">
+      <div class="varrow">
+        <span style="font-size:13.5px; font-weight:600; color:var(--ink-soft)">Standard deviation</span>
+        <input type="range" id="sdRange" min="6" max="42" value="14">
+        <span class="vlab" id="sdLab">14</span>
+      </div>
+      <div class="curvebox" style="margin-top:12px"><div id="varHost"></div></div>
+      <div id="varOut" class="fb show" style="background:#fbfaf7; border:1px solid var(--line); color:var(--ink-soft)"></div>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">The relationship in one sentence</div>
+    <p>The greater the variability, the <strong>less accurately</strong> your data is summarized by its measure of central tendency. High variability means low predictability.</p>
+  </div>
+
+  <p>The mean tells you what to expect. The standard deviation tells you <em>how much you can trust</em> that expectation. You always report them together, and that's why.</p>
+
+</section>
+
+<!-- 10 KURTOSIS -->
+<section class="sec" data-title="Kurtosis">
+  <div class="eyebrow">Part 1 · Diagnosing normality</div>
+  <h2>Kurtosis</h2>
+  <p class="lede">Different words for differently-shaped distributions. Kurtosis is about the <strong>spread</strong> — so it's the standard deviation, showing up in the shape of the curve.</p>
+
+  <div class="demo">
+    <header><span>Three shapes</span><span class="hint">Click each</span></header>
+    <div class="pad">
+      <div class="tabs t3" id="kurtTabs">
+        <button class="tab" data-k="0"><span class="nm">Platykurtic</span><span class="sub">wide &amp; flat</span></button>
+        <button class="tab on" data-k="1"><span class="nm">Mesokurtic</span><span class="sub">normal</span></button>
+        <button class="tab" data-k="2"><span class="nm">Leptokurtic</span><span class="sub">tall &amp; tight</span></button>
+      </div>
+      <div class="curvebox" style="margin-bottom:16px"><div id="kurtHost"></div></div>
+      <div class="panelout" id="kurtOut"></div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="card g">
+      <h4>Remembering platykurtic</h4>
+      <p>The curve looks like an <strong>upside-down plate</strong> — wide, low, flat. Big standard deviations, lots of variability.</p>
+    </div>
+    <div class="card p">
+      <h4>Remembering leptokurtic</h4>
+      <p>Think <strong>leaping leprechaun</strong> — you'd have to leap really high to get over the hump. Small standard deviations, very little variability.</p>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">Diagnosing normality</div>
+    <p>Two things you check: <strong>kurtosis</strong> — how spread out the data is, whether the hump is a rolling hill or a steep peak — and <strong>skewness</strong> — whether the data leans in a direction rather than sitting symmetric.</p>
+  </div>
+
+</section>
+
+<!-- 11 SEINFELD -->
+<section class="sec" data-title="Hypothesis testing: do the opposite">
+  <div class="eyebrow">Part 2 · Hypothesis testing</div>
+  <h2>Do the opposite</h2>
+  <p class="lede">We're going to start with a clip from Seinfeld.</p>
+
+  <div class="video">
+    <div class="play">▶</div>
+    <div>
+      <h4>Seinfeld — “The Opposite”</h4>
+      <p class="meta">Clip</p>
+      <p>George Costanza concludes that since every instinct he's ever had has been wrong, the opposite would have to be right. He orders the opposite of tuna on toast, and his life immediately improves.</p>
+      <a class="btn" href="https://www.youtube.com/watch?v=1Y_6fZGSOQI" target="_blank" rel="noopener">Watch on YouTube ↗</a>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">Keep this in mind</div>
+    <p><strong>Do the opposite.</strong> That's the whole structure of hypothesis testing, and it's the thing to hang onto for the rest of this module.</p>
+  </div>
+
+</section>
+
+<!-- 12 H0 / HA -->
+<section class="sec" data-title="Null &amp; alternative hypotheses">
+  <div class="eyebrow">Part 2 · Hypothesis testing</div>
+  <h2>Null and alternative hypotheses</h2>
+  <p class="lede">Two things you need to know, and one surprising fact about which one you actually test.</p>
+
+  <div class="cols">
+    <div class="card a">
+      <h4><span style="font-family:var(--serif); font-size:20px">H<sub>A</sub></span> &nbsp;Alternative Hypothesis</h4>
+      <p>A <strong>statement about your research question</strong>. Essentially just your research question turned from a question into a claim.</p>
+    </div>
+    <div class="card p">
+      <h4><span style="font-family:var(--serif); font-size:20px">H<sub>0</sub></span> &nbsp;Null Hypothesis</h4>
+      <p><strong>Do the opposite.</strong> Whatever your alternative says, the null says it isn't so.</p>
+    </div>
+  </div>
+
+  <p style="font-size:14.5px; color:var(--ink-faint)">You'll see these written as H-sub-zero and H-sub-A. People say them out loud as “H-nought,” “H-zero,” or just “the null.”</p>
+
+  <h3>Worked example</h3>
+  <div class="hb">
+    <div class="out">
+      <div class="hrow"><span class="tag">Research question</span><span class="txt">How does caffeine consumption impact productivity?</span></div>
+      <div class="hrow"><span class="tag">H<sub>A</sub></span><span class="txt">Caffeine consumption <strong>impacts</strong> productivity.</span></div>
+      <div class="hrow null"><span class="tag">H<sub>0</sub></span><span class="txt">Do the opposite: caffeine consumption does <strong>NOT</strong> impact productivity.</span></div>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">The part that feels backwards</div>
+    <p>Statistics is <strong>always testing the null hypothesis</strong>. Not your hypothesis — its opposite. Typically we think there <em>is</em> an effect; the null says there's no effect; and the null is what actually goes on trial.</p>
+  </div>
+
+  <h3>Now do yours</h3>
+  <div class="demo">
+    <header><span>Activity · Build your own hypotheses</span><span class="hint">Type your research question</span></header>
+    <div class="pad hb">
+      <input id="rqInput" type="text" placeholder="e.g. Does sleep quality affect exam performance?" autocomplete="off">
+      <div style="display:flex; gap:9px; flex-wrap:wrap; margin-top:12px">
+        <button class="btn solid btn sm" id="rqGo">Build H<sub>A</sub> and H<sub>0</sub></button>
+        <button class="btn sm" id="rqEx">Use the caffeine example</button>
+      </div>
+      <div class="out" id="rqOut"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- 13 P VALUES -->
+<section class="sec" data-title="The p value and the .05 benchmark">
+  <div class="eyebrow">Part 2 · Hypothesis testing</div>
+  <h2>The <em>p</em> value</h2>
+  <p class="lede">So how do we know whether the null hypothesis holds up? We look at the <em>p</em> value.</p>
+
+  <div class="cols">
+    <div class="card g">
+      <h4><em>p</em> &lt; .05</h4>
+      <p style="font-size:17px; font-weight:700; color:var(--gold)">Significant</p>
+    </div>
+    <div class="card">
+      <h4><em>p</em> ≥ .05</h4>
+      <p style="font-size:17px; font-weight:700; color:var(--ink-soft)">Not significant</p>
+    </div>
+  </div>
+
+  <p><strong>.05 is the benchmark cutoff in psychology.</strong> You'll read articles where someone sets a stricter benchmark — .01, say — and that's a personal decision they're making. But the bare minimum in the field is that it has to be less than .05.</p>
+
+  <div class="demo">
+    <header><span>Activity · Sort the p values</span><span class="hint">Click a value, then a bucket</span></header>
+    <div class="pad">
+      <div class="chips" id="pChips"></div>
+      <div class="buckets">
+        <button class="bucket sig" data-b="sig">
+          <h4>Significant</h4>
+          <p class="cond"><em>p</em> &lt; .05</p>
+          <div class="drop" id="dropSig"></div>
+        </button>
+        <button class="bucket ns" data-b="ns">
+          <h4>Not significant</h4>
+          <p class="cond"><em>p</em> ≥ .05</p>
+          <div class="drop" id="dropNs"></div>
+        </button>
+      </div>
+      <div class="fb" id="pFb"></div>
+    </div>
+    <div class="scorebar-wrap">
+      <span>Sorted <b id="pN">0</b> / <span id="pT">6</span></span>
+      <div class="sbar"><div class="sfill" id="pFill"></div></div>
+      <button class="btn sm" id="pReset">Reset</button>
+    </div>
+  </div>
+
+  <div class="key">
+    <div class="lbl">The cruel ones</div>
+    <p><em>p</em> = .05 is <strong>not</strong> significant — the rule is <em>less than</em> .05, and .05 is not less than .05. Neither is .051. Neither is .05000001, no matter how many zeros you put in there. Close, but no cigar.</p>
+  </div>
+
+</section>
+
+<!-- 14 WHAT P MEANS -->
+<section class="sec" data-title="What p &lt; .05 actually means">
+  <div class="eyebrow">Part 2 · Hypothesis testing</div>
+  <h2>What <em>p</em> &lt; .05 actually means</h2>
+
+  <div class="key">
+    <div class="lbl">The formal statement</div>
+    <p><em>p</em> &lt; .05 means that <strong>if the null hypothesis were true</strong>, we would expect to see results as extreme as the ones we observed <strong>less than 5 times out of 100</strong> due to random chance.</p>
+  </div>
+
+  <h3>In terms of the caffeine study</h3>
+  <p>If caffeine truly had no effect on productivity, we'd see results like ours in fewer than 5 out of every 100 experiments just by chance. That's rare enough that we stop believing the "no effect" explanation.</p>
+
+  <div class="cols">
+    <div class="card t">
+      <h4>So we conclude…</h4>
+      <p>The null hypothesis doesn't hold up. Caffeine consumption <strong>does</strong> impact productivity — our alternative hypothesis is supported.</p>
+    </div>
+    <div class="card">
+      <h4>What it is <em>not</em></h4>
+      <p><em>p</em> is not the probability that your hypothesis is right. It's the probability of getting data like yours <strong>in a world where nothing is going on</strong>.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- 15 REJECT -->
+<section class="sec" data-title="Reject or fail to reject">
+  <div class="eyebrow">Part 2 · Hypothesis testing</div>
+  <h2>Reject, or fail to reject</h2>
+  <p class="lede">In statistics we don't get to say a hypothesis is simply true or false. We have to use two very specific phrases.</p>
+
+  <div class="cols">
+    <div class="card g">
+      <h4><em>p</em> &lt; .05</h4>
+      <p style="font-size:17px; font-weight:700; color:var(--gold); margin-bottom:8px">REJECT the null hypothesis</p>
+      <p>We're rejecting the claim that caffeine does not affect productivity. This is what we're hoping for.</p>
+    </div>
+    <div class="card">
+      <h4><em>p</em> ≥ .05</h4>
+      <p style="font-size:17px; font-weight:700; color:var(--ink-soft); margin-bottom:8px">FAIL TO REJECT the null hypothesis</p>
+      <p>We don't have enough evidence to rule out "no effect." Notice we say <em>fail to reject</em> — not <em>accept</em>.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin:26px 0">
+    <img id="imgYoda" src="data:image/jpeg;base64,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" alt="Yoda: Reject, or fail to reject. There is no accept." style="max-width:420px; width:100%; border-radius:10px; border:1px solid var(--line)">
+  </div>
+
+  <div class="key">
+    <div class="lbl">Why the awkward phrasing</div>
+    <p>Failing to reject doesn't prove the null is true — it means you didn't find enough evidence against it. Absence of evidence isn't evidence of absence. It's a little annoying and a little confusing, and it's also the entire reason the phrase exists.</p>
+  </div>
+
+  <div class="demo">
+    <header><span>Activity · What's your conclusion?</span><span class="hint">Given each p value</span></header>
+    <div class="pad" id="rejGame"></div>
+    <div class="scorebar-wrap">
+      <span>Correct <b id="rejN">0</b> / <span id="rejT">4</span></span>
+      <div class="sbar"><div class="sfill" id="rejFill"></div></div>
+      <button class="btn sm" id="rejReset">Reset</button>
+    </div>
+  </div>
+
+  <p style="font-size:14.5px; color:var(--ink-faint); margin-top:18px">The good news: in practice, published articles rarely phrase it this formally. Mostly they just report whether the <em>p</em> value was significant. But you should know what's underneath that sentence.</p>
+
+</section>
+
+<!-- 16 TAKEAWAY -->
+<section class="sec" data-title="What to take away">
+  <div class="eyebrow">Wrapping up</div>
+  <h2>What to take away</h2>
+
+  <div class="key">
+    <div class="lbl">Your assignment for your own brain</div>
+    <p>Start thinking about what the <strong>null</strong> and <strong>alternative hypothesis</strong> would be for your final paper — your research project.</p>
+  </div>
+
+  <h3>The through-line</h3>
+  <div class="cols">
+    <div class="card t">
+      <h4>Part 1</h4>
+      <p>Before you test anything, you look at how your dependent variable is distributed. Normal or skewed, tight or spread out. That's <strong>skewness</strong> and <strong>kurtosis</strong>, and it decides what you're allowed to do next.</p>
+    </div>
+    <div class="card g">
+      <h4>Part 2</h4>
+      <p>Turn your research question into a claim — that's H<sub>A</sub>. Take its opposite — that's H<sub>0</sub>. Then test the opposite, and let the <em>p</em> value tell you whether to reject it.</p>
+    </div>
+  </div>
+
+  <h3>Coming up</h3>
+  <p>We'll keep working on the normal distribution and diagnosing normality, and we'll come back to hypothesis testing properly once we start running actual tests.</p>
+
+  <div class="key t">
+    <div class="lbl">If you remember two things</div>
+    <p><strong>Follow the tail</strong> to name a skew. And <strong>George Costanza</strong> — the null hypothesis is always the opposite of what you're hoping for.</p>
+  </div>
+
+</section>
+
+</div></main>
+
+<div id="pnav">
+  <button id="pPrev">←</button>
+  <span class="lbl" id="pLabel"></span>
+  <span class="ct"><span id="pNow">1</span> / <span id="pTot">1</span></span>
+  <button id="pNext">→</button>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var secs=$$('section.sec'), idx=0;
+
+/* ---------- TOC ---------- */
+var toc=$('#toc');
+secs.forEach(function(s,i){
+  s.id='s'+i;
+  var li=document.createElement('li'), a=document.createElement('a');
+  a.href='#s'+i;
+  a.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span>'+s.dataset.title;
+  a.addEventListener('click',function(e){ if(document.body.classList.contains('present')){e.preventDefault(); go(i);} });
+  li.appendChild(a); toc.appendChild(li);
+});
+var tocLinks=$$('#toc a');
+function markToc(i){tocLinks.forEach(function(a,j){a.classList.toggle('active',j===i)})}
+if('IntersectionObserver' in window){
+  var io=new IntersectionObserver(function(es){
+    if(document.body.classList.contains('present'))return;
+    es.forEach(function(e){ if(e.isIntersecting) markToc(secs.indexOf(e.target)); });
+  },{rootMargin:'-60px 0px -65% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+}
+function go(i){
+  idx=Math.max(0,Math.min(secs.length-1,i));
+  secs.forEach(function(s,j){s.classList.toggle('live',j===idx)});
+  markToc(idx);
+  $('#pLabel').textContent=secs[idx].dataset.title;
+  $('#pNow').textContent=idx+1;
+  $('#prog').style.width=((idx+1)/secs.length*100)+'%';
+  window.scrollTo(0,0);
+}
+function setMode(p){
+  document.body.classList.toggle('present',p);
+  $('#mPresent').classList.toggle('on',p);
+  $('#mStudy').classList.toggle('on',!p);
+  if(p){ $('#pTot').textContent=secs.length; go(idx); }
+  else{ secs.forEach(function(s){s.classList.remove('live')}); if(secs[idx])secs[idx].scrollIntoView(); }
+}
+$('#mPresent').addEventListener('click',function(){setMode(true)});
+$('#mStudy').addEventListener('click',function(){setMode(false)});
+$('#pNext').addEventListener('click',function(){go(idx+1)});
+$('#pPrev').addEventListener('click',function(){go(idx-1)});
+document.addEventListener('keydown',function(e){
+  var t=e.target.tagName;
+  if(t==='INPUT'||t==='TEXTAREA'||e.target.isContentEditable)return;
+  var p=document.body.classList.contains('present');
+  if(p&&(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')){e.preventDefault();go(idx+1)}
+  else if(p&&(e.key==='ArrowLeft'||e.key==='PageUp')){e.preventDefault();go(idx-1)}
+  else if(e.key==='Escape'&&p){setMode(false)}
+  else if(e.key==='f'||e.key==='F'){
+    if(!document.fullscreenElement){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}
+    else{document.exitFullscreen&&document.exitFullscreen()}
+  }
+});
+
+/* ---------- search ---------- */
+var sIn=$('#search');
+function clearMarks(){
+  $$('mark').forEach(function(m){var p=m.parentNode; p.replaceChild(document.createTextNode(m.textContent),m); p.normalize();});
+  secs.forEach(function(s){s.classList.remove('dimmed')});
+  tocLinks.forEach(function(a){a.parentNode.style.display=''});
+}
+function hilite(node,re){
+  if(node.nodeType===3){
+    if(node.data.match(re)){
+      var sp=document.createElement('span');
+      sp.innerHTML=node.data.replace(re,'<mark>$&</mark>');
+      node.parentNode.replaceChild(sp,node);
+    }
+  } else if(node.nodeType===1&&!/^(SCRIPT|STYLE|MARK|INPUT|SVG)$/i.test(node.tagName)){
+    Array.prototype.slice.call(node.childNodes).forEach(function(c){hilite(c,re)});
+  }
+}
+sIn.addEventListener('input',function(){
+  clearMarks();
+  var q=this.value.trim(); if(q.length<2)return;
+  var re=new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+  secs.forEach(function(s,i){
+    var hit=re.test(s.textContent); re.lastIndex=0;
+    if(hit){ hilite(s,re); } else { s.classList.add('dimmed'); tocLinks[i].parentNode.style.display='none'; }
+  });
+});
+
+/* ===================== helpers ===================== */
+function gauss(x,mu,sd){return Math.exp(-0.5*Math.pow((x-mu)/sd,2))}
+function curvePath(w,h,mu,sd,pad){
+  pad=pad||0; var pts=[], N=160;
+  for(var i=0;i<=N;i++){
+    var x=i/N*w, y=h-pad-gauss(x,mu,sd)*(h-pad*2);
+    pts.push((i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1));
+  }
+  return pts.join(' ');
+}
+function areaPath(w,h,mu,sd,x0,x1,pad){
+  pad=pad||0; var pts=['M'+x0.toFixed(1)+' '+(h-pad)], N=60;
+  for(var i=0;i<=N;i++){
+    var x=x0+(x1-x0)*i/N, y=h-pad-gauss(x,mu,sd)*(h-pad*2);
+    pts.push('L'+x.toFixed(1)+' '+y.toFixed(1));
+  }
+  pts.push('L'+x1.toFixed(1)+' '+(h-pad)+' Z');
+  return pts.join(' ');
+}
+function mkScore(nEl,fillEl,total){
+  var n=0;
+  return function(){ n++; $(nEl).textContent=n; $(fillEl).style.width=(n/total*100)+'%'; };
+}
+
+/* ===================== 1. IV / DV DRILL ===================== */
+var ivdvData=[
+  {s:'In order to earn extra money over the summer, Clayton is working as an English tutor. The amount of money he earns depends on the number of students he tutors.',
+   opts:['# of students tutored','Amount of money earned','Time spent tutoring','Clayton'],
+   iv:'# of students tutored', dv:'Amount of money earned',
+   whyIV:'The number of students is what varies and what could explain the difference in earnings.',
+   whyDV:'The money earned is the outcome — it depends on the number of students.'},
+  {s:'In the United States House of Representatives, the number of Representatives from a state is calculated based on its population.',
+   opts:['Population','# of representatives','The state','Year of the census'],
+   iv:'Population', dv:'# of representatives',
+   whyIV:'Population is the input to the calculation — it determines the outcome.',
+   whyDV:'The number of representatives is what gets produced. Follow the causal direction: population → representatives, never the reverse.'},
+  {s:'Christie is told a certain itching powder is the newest, best thing on the market — it even claims to cause 50% longer-lasting itches. He buys it and compares it to his usual product. Test subject A is sprinkled with the original itching powder; test subject B with the experimental powder. Subject A reported itches for 30 minutes, subject B for 45 minutes.',
+   opts:['Experimental itching powder','Length of time with itches','Test subjects A and B','50% claim'],
+   iv:'Experimental itching powder', dv:'Length of time with itches',
+   whyIV:'Which powder gets used is what Christie controls and manipulates.',
+   whyDV:'Time with itches is what gets measured. Note: even though there are two test subjects, the subjects are not the IV — the powder is.'}
+];
+(function(){
+  var host=$('#ivdv'), bump;
+  function build(){
+    host.innerHTML=''; $('#ivdvN').textContent='0'; $('#ivdvT').textContent=ivdvData.length*2; $('#ivdvFill').style.width='0%';
+    bump=mkScore('#ivdvN','#ivdvFill',ivdvData.length*2);
+    ivdvData.forEach(function(d,i){
+      var w=document.createElement('div'); w.className='q-item';
+      w.innerHTML='<p class="q-text"><span class="num">'+String(i+1).padStart(2,'0')+'</span>'+d.s+'</p>'+
+        '<div class="q-sub">Independent variable</div><div class="opts" data-r="iv"></div><div class="fb" data-f="iv"></div>'+
+        '<div class="q-sub">Dependent variable</div><div class="opts" data-r="dv"></div><div class="fb" data-f="dv"></div>';
+      host.appendChild(w);
+      ['iv','dv'].forEach(function(role){
+        var box=w.querySelector('.opts[data-r="'+role+'"]'), fb=w.querySelector('.fb[data-f="'+role+'"]');
+        var answer=d[role], why=d[role==='iv'?'whyIV':'whyDV'], done=false;
+        d.opts.forEach(function(o){
+          var b=document.createElement('button'); b.textContent=o;
+          b.addEventListener('click',function(){
+            if(done)return; done=true;
+            var ok=o===answer;
+            $$('button',box).forEach(function(x){ x.disabled=true; if(x.textContent===answer)x.classList.add('right'); });
+            if(!ok)b.classList.add('wrong');
+            fb.className='fb show '+(ok?'y':'n');
+            fb.innerHTML='<strong>'+(ok?'Correct — ':'It’s ')+answer+'.</strong> '+why;
+            if(ok)bump();
+          });
+          box.appendChild(b);
+        });
+      });
+    });
+  }
+  $('#ivdvReset').addEventListener('click',build); build();
+})();
+
+/* ===================== 2. NORMAL CURVE ===================== */
+(function(){
+  var W=700,H=260,PAD=34, mu=W/2, sd=W/9;
+  var bands=[
+    {a:-3,b:-2,pct:'2.1%',  col:'#e6dfd4', label:'Below −2 SD', txt:'About <b>2.1%</b> of values sit more than two standard deviations <b>below</b> the mean. These are your low-end outliers — in a height study, the really, really short people.'},
+    {a:-2,b:-1,pct:'13.6%', col:'#d6c3ae', label:'−2 to −1 SD', txt:'<b>13.6%</b> of values lie between one and two standard deviations <b>below</b> the mean. Remember: negative always means below.'},
+    {a:-1,b:0,  pct:'34.1%', col:'#c9906f', label:'−1 SD to mean', txt:'<b>34.1%</b> of values lie within one standard deviation <b>below</b> the mean. This and its mirror image are the two biggest chunks of your data.'},
+    {a:0,b:1,   pct:'34.1%', col:'#c9906f', label:'Mean to +1 SD', txt:'<b>34.1%</b> of values lie within one standard deviation <b>above</b> the mean.'},
+    {a:1,b:2,   pct:'13.6%', col:'#d6c3ae', label:'+1 to +2 SD', txt:'<b>13.6%</b> of values lie between one and two standard deviations <b>above</b> the mean.'},
+    {a:2,b:3,   pct:'2.1%',  col:'#e6dfd4', label:'Above +2 SD', txt:'About <b>2.1%</b> of values sit more than two standard deviations <b>above</b> the mean — the really, really tall people.'}
+  ];
+  var svg='<svg class="curve" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+  bands.forEach(function(bd,i){
+    var x0=mu+bd.a*sd, x1=mu+bd.b*sd;
+    svg+='<g class="bandbtn" data-band="'+i+'">'
+      +'<path class="bandfill" d="'+areaPath(W,H,mu,sd,x0,x1,PAD)+'" fill="'+bd.col+'" stroke="#fff" stroke-width="1" opacity=".95"/>'
+      +'<text class="pctlab" x="'+((x0+x1)/2)+'" y="'+(H-PAD-14)+'" text-anchor="middle">'+bd.pct+'</text>'
+      +'</g>';
+  });
+  svg+='<path d="'+curvePath(W,H,mu,sd,PAD)+'" fill="none" stroke="#15202b" stroke-width="2.2"/>';
+  svg+='<line x1="0" y1="'+(H-PAD)+'" x2="'+W+'" y2="'+(H-PAD)+'" stroke="#15202b" stroke-width="1.5"/>';
+  [-3,-2,-1,0,1,2,3].forEach(function(k){
+    var x=mu+k*sd;
+    svg+='<line x1="'+x+'" y1="'+(H-PAD)+'" x2="'+x+'" y2="'+(H-PAD+6)+'" stroke="#7b8ba3" stroke-width="1.5"/>'
+      +'<text class="axlab" x="'+x+'" y="'+(H-PAD+21)+'" text-anchor="middle">'+(k===0?'0':(k>0?'+'+k:k))+'</text>';
+  });
+  svg+='<line x1="'+mu+'" y1="'+PAD*0.6+'" x2="'+mu+'" y2="'+(H-PAD)+'" stroke="#9c4221" stroke-width="1.6" stroke-dasharray="5 4"/>';
+  svg+='<text class="bandlab" x="'+mu+'" y="'+(PAD*0.6-6)+'" text-anchor="middle" fill="#9c4221">mean · median · mode</text>';
+  // 68 / 95 brackets
+  svg+='<g id="br68" style="display:none">'
+    +'<line x1="'+(mu-sd)+'" y1="'+(H-PAD+34)+'" x2="'+(mu+sd)+'" y2="'+(H-PAD+34)+'" stroke="#1b6b6b" stroke-width="2.5"/>'
+    +'<text class="pctlab" x="'+mu+'" y="'+(H-PAD+30)+'" text-anchor="middle" fill="#1b6b6b">68.2%</text></g>';
+  svg+='<g id="br95" style="display:none">'
+    +'<line x1="'+(mu-2*sd)+'" y1="'+(H-PAD+50)+'" x2="'+(mu+2*sd)+'" y2="'+(H-PAD+50)+'" stroke="#5b3a76" stroke-width="2.5"/>'
+    +'<text class="pctlab" x="'+mu+'" y="'+(H-PAD+46)+'" text-anchor="middle" fill="#5b3a76">95.4%</text></g>';
+  svg+='</svg>';
+  $('#curveHost').innerHTML=svg;
+  var out=$('#curveOut');
+  $$('#curveHost .bandbtn').forEach(function(g){
+    g.addEventListener('click',function(){
+      var bd=bands[+g.dataset.band];
+      out.innerHTML='<strong>'+bd.label+'</strong> — '+bd.txt;
+    });
+  });
+  function br(id,on){var e=$('#'+id); if(e)e.style.display=on?'':'none';}
+  $('#show68').addEventListener('click',function(){br('br68',true); br('br95',false);
+    out.innerHTML='<strong>68.2%</strong> of all values lie within <b>one</b> standard deviation of the mean — 34.1% above plus 34.1% below.';});
+  $('#show95').addEventListener('click',function(){br('br68',false); br('br95',true);
+    out.innerHTML='<strong>95.4%</strong> of all values lie within <b>two</b> standard deviations of the mean. Measure a thousand people’s heights and about 950 of them land in here.';});
+  $('#showAll').addEventListener('click',function(){br('br68',true); br('br95',true);
+    out.innerHTML='Both bands shown. The inner bracket is <b>68.2%</b> (±1 SD), the outer is <b>95.4%</b> (±2 SD).';});
+})();
+
+/* ===================== 3. SKEW GAME ===================== */
+(function(){
+  var W=420,H=170,PAD=26;
+  function skewPath(dir){
+    // dir: -1 left skew (tail left), 0 normal, +1 right skew (tail right)
+    var pts=[],N=140;
+    for(var i=0;i<=N;i++){
+      var t=i/N, x=t*W, v;
+      if(dir===0){ v=gauss(x,W/2,W/7); }
+      else if(dir>0){ v=gauss(x,W*0.32,W/11)*1.0 + gauss(x,W*0.55,W/7)*0.30 + gauss(x,W*0.78,W/8)*0.10; }
+      else { v=gauss(x,W*0.68,W/11)*1.0 + gauss(x,W*0.45,W/7)*0.30 + gauss(x,W*0.22,W/8)*0.10; }
+      pts.push((i?'L':'M')+x.toFixed(1)+' '+(H-PAD-v*(H-PAD*1.6)).toFixed(1));
+    }
+    return pts.join(' ');
+  }
+  function svgFor(dir){
+    return '<svg class="curve" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">'
+      +'<path d="'+skewPath(dir)+' L '+W+' '+(H-PAD)+' L 0 '+(H-PAD)+' Z" fill="#f0e6dc" stroke="none"/>'
+      +'<path d="'+skewPath(dir)+'" fill="none" stroke="#15202b" stroke-width="2.2"/>'
+      +'<line x1="0" y1="'+(H-PAD)+'" x2="'+W+'" y2="'+(H-PAD)+'" stroke="#15202b" stroke-width="1.5"/>'
+      +'</svg>';
+  }
+  var items=[
+    {dir:1, a:'Right skew', why:'The tail stretches out to the <b>right</b>, so it’s right skewed. The bulk of the values sit on the left with a few high outliers pulling the tail out.'},
+    {dir:-1,a:'Left skew',  why:'The tail stretches out to the <b>left</b>, so it’s left skewed. Bulk on the right, a few low outliers dragging the tail.'},
+    {dir:0, a:'Normal',     why:'Symmetric — no tail longer than the other. Mean, median, and mode all land in the same place.'}
+  ];
+  var host=$('#skewGame');
+  items.forEach(function(d,i){
+    var w=document.createElement('div'); w.className='q-item';
+    w.innerHTML='<div style="max-width:420px;margin:0 auto 12px">'+svgFor(d.dir)+'</div>'+
+      '<div class="opts"></div><div class="fb"></div>';
+    host.appendChild(w);
+    var box=$('.opts',w), fb=$('.fb',w), done=false;
+    ['Left skew','Normal','Right skew'].forEach(function(o){
+      var b=document.createElement('button'); b.textContent=o;
+      b.addEventListener('click',function(){
+        if(done)return; done=true;
+        var ok=o===d.a;
+        $$('button',box).forEach(function(x){x.disabled=true; if(x.textContent===d.a)x.classList.add('right')});
+        if(!ok)b.classList.add('wrong');
+        fb.className='fb show '+(ok?'y':'n');
+        fb.innerHTML='<strong>'+(ok?'Correct — ':'It’s ')+d.a+'.</strong> '+d.why;
+      });
+      box.appendChild(b);
+    });
+  });
+})();
+
+/* ===================== 4. CENTRAL TENDENCY CHOOSER ===================== */
+(function(){
+  var data=[
+    {q:'Household income across a large city',a:'Median',
+     why:'Income is famously skewed — a handful of very high earners drag the mean upward. The median is unaffected by how extreme the extremes are.'},
+    {q:'Race and ethnicity of students in a school district',a:'Mode',
+     why:'Nominal data. You can’t average categories or rank them — you can only report which one occurred most.'},
+    {q:'Reaction times in a lab task, with no unusual values',a:'Mean',
+     why:'Ratio data with no extreme values. The mean uses every score and is the standard choice in psychology research.'},
+    {q:'Class rank of students in a graduating cohort',a:'Median',
+     why:'Rank-ordered — ordinal data. The gaps between ranks aren’t equal, so averaging them isn’t meaningful.'},
+    {q:'Scores on a depression inventory, where three participants scored far above everyone else',a:'Median',
+     why:'Interval data, but those three extreme scores will pull the mean up and misrepresent the typical participant. Extreme values present → median.'}
+  ];
+  var host=$('#ctGame'), bump;
+  function build(){
+    host.innerHTML=''; $('#ctN').textContent='0'; $('#ctT').textContent=data.length; $('#ctFill').style.width='0%';
+    bump=mkScore('#ctN','#ctFill',data.length);
+    data.forEach(function(d,i){
+      var w=document.createElement('div'); w.className='q-item';
+      w.innerHTML='<p class="q-text"><span class="num">'+String(i+1).padStart(2,'0')+'</span>'+d.q+'</p><div class="opts"></div><div class="fb"></div>';
+      host.appendChild(w);
+      var box=$('.opts',w), fb=$('.fb',w), done=false;
+      ['Mean','Median','Mode'].forEach(function(o){
+        var b=document.createElement('button'); b.textContent=o;
+        b.addEventListener('click',function(){
+          if(done)return; done=true;
+          var ok=o===d.a;
+          $$('button',box).forEach(function(x){x.disabled=true; if(x.textContent===d.a)x.classList.add('right')});
+          if(!ok)b.classList.add('wrong');
+          fb.className='fb show '+(ok?'y':'n');
+          fb.innerHTML='<strong>'+(ok?'Correct — ':'It’s the ')+d.a+'.</strong> '+d.why;
+          if(ok)bump();
+        });
+        box.appendChild(b);
+      });
+    });
+  }
+  $('#ctReset').addEventListener('click',build); build();
+})();
+
+/* ===================== 5. VARIABILITY SLIDER ===================== */
+(function(){
+  var W=700,H=230,PAD=30, mu=W/2;
+  function render(sd){
+    var s='<svg class="curve" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+    s+='<path d="'+areaPath(W,H,mu,sd,mu-sd,mu+sd,PAD)+'" fill="#e8d3c4" opacity=".8"/>';
+    s+='<path d="'+curvePath(W,H,mu,sd,PAD)+'" fill="none" stroke="#15202b" stroke-width="2.2"/>';
+    s+='<line x1="0" y1="'+(H-PAD)+'" x2="'+W+'" y2="'+(H-PAD)+'" stroke="#15202b" stroke-width="1.5"/>';
+    s+='<line x1="'+mu+'" y1="'+(PAD*0.5)+'" x2="'+mu+'" y2="'+(H-PAD)+'" stroke="#9c4221" stroke-width="1.6" stroke-dasharray="5 4"/>';
+    s+='<text class="bandlab" x="'+mu+'" y="'+(PAD*0.5-5)+'" text-anchor="middle" fill="#9c4221">mean (fixed)</text>';
+    s+='<line x1="'+(mu-sd)+'" y1="'+(H-PAD+16)+'" x2="'+(mu+sd)+'" y2="'+(H-PAD+16)+'" stroke="#1b6b6b" stroke-width="2.5"/>';
+    s+='<text class="pctlab" x="'+mu+'" y="'+(H-PAD+12)+'" text-anchor="middle" fill="#1b6b6b">±1 SD</text>';
+    s+='</svg>';
+    $('#varHost').innerHTML=s;
+    var msg;
+    if(sd<=13) msg='<strong>Low variability.</strong> Scores are packed tightly around the mean — very consistent. This is the McDonald’s burger: you know exactly what you’re getting every time. High predictability, and the mean describes the data well.';
+    else if(sd<=26) msg='<strong>Moderate variability.</strong> Scores spread out around the mean but still cluster. The mean is a reasonable summary, with some individual variation around it.';
+    else msg='<strong>High variability.</strong> Scores are scattered far from the mean. This is the restaurant that’s excellent one visit and mediocre the next — you can’t predict any single case, and the mean tells you much less about what to expect.';
+    $('#varOut').innerHTML=msg+' <em>Notice the mean never moved.</em>';
+  }
+  var r=$('#sdRange');
+  r.addEventListener('input',function(){ $('#sdLab').textContent=r.value; render(+r.value); });
+  $('#sdLab').textContent=r.value; render(+r.value);
+})();
+
+/* ===================== 6. KURTOSIS ===================== */
+(function(){
+  var W=700,H=210,PAD=26, mu=W/2;
+  var K=[
+    {sd:W/5.0, nm:'Platykurtic', txt:'<h4>Platykurtic — a lot of variability</h4><p>The standard deviations are <b>large</b>, so the curve spreads out wide and low. Scores are scattered rather than clustered.</p><p>The shape looks like an <b>upside-down plate</b> — that’s the way to remember it.</p>'},
+    {sd:W/9.0, nm:'Mesokurtic', txt:'<h4>Mesokurtic — the normal distribution</h4><p>This is the reference shape. Not unusually flat, not unusually peaked — the standard bell curve you’d diagnose as normally distributed.</p><p>“Meso” means middle. It’s the one the other two are named relative to.</p>'},
+    {sd:W/22.0, nm:'Leptokurtic', txt:'<h4>Leptokurtic — very little variability</h4><p>The standard deviations are <b>small</b>, so scores pile up tightly around the mean and the curve rises to a steep peak.</p><p>Think <b>leaping leprechaun</b> — you’d have to leap really high to clear the hump.</p>'}
+  ];
+  function render(i){
+    var sd=K[i].sd;
+    var s='<svg class="curve" viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg">';
+    K.forEach(function(k,j){
+      if(j===i)return;
+      s+='<path d="'+curvePath(W,H,mu,k.sd,PAD)+'" fill="none" stroke="#d8d4cc" stroke-width="1.5" stroke-dasharray="4 4"/>';
+    });
+    s+='<path d="'+areaPath(W,H,mu,sd,0,W,PAD)+'" fill="#e8d3c4" opacity=".75"/>';
+    s+='<path d="'+curvePath(W,H,mu,sd,PAD)+'" fill="none" stroke="#9c4221" stroke-width="2.6"/>';
+    s+='<line x1="0" y1="'+(H-PAD)+'" x2="'+W+'" y2="'+(H-PAD)+'" stroke="#15202b" stroke-width="1.5"/>';
+    s+='</svg>';
+    $('#kurtHost').innerHTML=s;
+    $('#kurtOut').innerHTML=K[i].txt;
+  }
+  $$('#kurtTabs .tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      $$('#kurtTabs .tab').forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on'); render(+b.dataset.k);
+    });
+  });
+  render(1);
+})();
+
+/* ===================== 7. HYPOTHESIS BUILDER ===================== */
+(function(){
+  function clean(q){
+    var t=q.trim().replace(/\?+$/,'');
+    t=t.replace(/^(how|what|why|when|where|whether|does|do|is|are|can|could|will|would)\s+/i,'');
+    t=t.replace(/^(does|do|is|are)\s+/i,'');
+    return t;
+  }
+  function build(q){
+    var core=clean(q);
+    if(!core){ $('#rqOut').innerHTML='<div class="hrow"><span class="txt" style="color:var(--ink-faint)">Type a research question above, then press the button.</span></div>'; return; }
+    $('#rqOut').innerHTML=
+      '<div class="hrow"><span class="tag">Research question</span><span class="txt">'+q.replace(/</g,'&lt;')+'</span></div>'+
+      '<div class="hrow"><span class="tag">H<sub>A</sub></span><span class="txt">There <strong>is</strong> a relationship / effect: <em>'+core.replace(/</g,'&lt;')+'</em></span></div>'+
+      '<div class="hrow null"><span class="tag">H<sub>0</sub></span><span class="txt">Do the opposite — there is <strong>NO</strong> relationship / effect: <em>'+core.replace(/</g,'&lt;')+'</em></span></div>'+
+      '<div class="fb show y" style="margin-top:4px">Now tighten the wording yourself. H<sub>A</sub> should name your independent and dependent variable explicitly, and H<sub>0</sub> should be its exact negation — nothing more, nothing less.</div>';
+  }
+  $('#rqGo').addEventListener('click',function(){build($('#rqInput').value)});
+  $('#rqInput').addEventListener('keydown',function(e){if(e.key==='Enter')build(this.value)});
+  $('#rqEx').addEventListener('click',function(){
+    $('#rqInput').value='How does caffeine consumption impact productivity?';
+    build($('#rqInput').value);
+  });
+  build('');
+})();
+
+/* ===================== 8. P VALUE BUCKETS ===================== */
+(function(){
+  var vals=[
+    {v:'.049', sig:true,  why:'.049 is less than .05, so it lands in the significant bucket. Barely — but the rule is the rule.'},
+    {v:'.05',  sig:false, why:'This is the cruel one. The rule is <b>less than</b> .05, and .05 is not less than .05. It goes in the not-significant bucket.'},
+    {v:'.051', sig:false, why:'Close, but no cigar. Greater than .05, so not significant.'},
+    {v:'.05000001', sig:false, why:'You can put as many zeros in there as you like — infinity zeros and then a one. It is still greater than .05, so it is still not significant.'},
+    {v:'.001', sig:true,  why:'Comfortably below .05. Significant.'},
+    {v:'.49',  sig:false, why:'Well above .05 — not significant. Watch the decimal place carefully: .49 and .049 are very different numbers and only one of them is significant.'}
+  ];
+  var sel=null, bump, placed;
+  function build(){
+    placed=0;
+    $('#pN').textContent='0'; $('#pT').textContent=vals.length; $('#pFill').style.width='0%';
+    bump=mkScore('#pN','#pFill',vals.length);
+    $('#dropSig').innerHTML=''; $('#dropNs').innerHTML=''; $('#pFb').className='fb'; sel=null;
+    var host=$('#pChips'); host.innerHTML='';
+    vals.forEach(function(d,i){
+      var b=document.createElement('button'); b.className='chip'; b.textContent='p = '+d.v; b.dataset.i=i;
+      b.addEventListener('click',function(){
+        if(b.disabled)return;
+        $$('#pChips .chip').forEach(function(x){x.classList.remove('sel')});
+        b.classList.add('sel'); sel=i;
+        $('#pFb').className='fb show';
+        $('#pFb').style.background='#fbfaf7'; $('#pFb').style.border='1px solid var(--line)'; $('#pFb').style.color='var(--ink-soft)';
+        $('#pFb').innerHTML='Now click a bucket for <b>p = '+d.v+'</b>.';
+      });
+      host.appendChild(b);
+    });
+  }
+  $$('.bucket').forEach(function(bk){
+    bk.addEventListener('click',function(){
+      if(sel===null){
+        $('#pFb').className='fb show n'; $('#pFb').style.cssText='';
+        $('#pFb').innerHTML='Pick a <em>p</em> value first, then choose a bucket.'; return;
+      }
+      var d=vals[sel], wantSig=bk.dataset.b==='sig', ok=(d.sig===wantSig);
+      var chip=$('#pChips .chip[data-i="'+sel+'"]');
+      chip.disabled=true; chip.classList.remove('sel');
+      var target=$(d.sig?'#dropSig':'#dropNs');
+      var sp=document.createElement('span'); sp.className=ok?'ok':'bad'; sp.textContent=d.v;
+      target.appendChild(sp);
+      if(!ok){
+        var wrongBox=$(wantSig?'#dropSig':'#dropNs');
+        // leave a struck-through ghost where they wrongly put it
+        var ghost=document.createElement('span'); ghost.className='bad'; ghost.textContent=d.v;
+        if(wrongBox!==target) wrongBox.appendChild(ghost);
+      }
+      $('#pFb').style.cssText='';
+      $('#pFb').className='fb show '+(ok?'y':'n');
+      $('#pFb').innerHTML='<strong>p = '+d.v+' → '+(d.sig?'Significant':'Not significant')+'.</strong> '+d.why;
+      if(ok)bump();
+      placed++; sel=null;
+      if(placed===vals.length){
+        $('#pFb').innerHTML+='<br><br><strong>All sorted.</strong> The three near-misses are the point: .05, .051, and .05000001 all fail. The line is absolute even when it feels arbitrary.';
+      }
+    });
+  });
+  $('#pReset').addEventListener('click',build); build();
+})();
+
+/* ===================== 9. REJECT / FAIL TO REJECT ===================== */
+(function(){
+  var data=[
+    {p:'.03',  a:'Reject the null', why:'.03 is less than .05, so we reject the null hypothesis — we reject the claim that there is no effect.'},
+    {p:'.05',  a:'Fail to reject the null', why:'.05 is not <em>less than</em> .05. We fail to reject the null — we don’t have enough evidence to rule out “no effect.”'},
+    {p:'.72',  a:'Fail to reject the null', why:'Nowhere near the cutoff. We fail to reject. Note we do not say we “accept” the null or that it’s true — only that we couldn’t rule it out.'},
+    {p:'.004', a:'Reject the null', why:'Well below .05. Reject the null hypothesis.'}
+  ];
+  var host=$('#rejGame'), bump;
+  function build(){
+    host.innerHTML=''; $('#rejN').textContent='0'; $('#rejT').textContent=data.length; $('#rejFill').style.width='0%';
+    bump=mkScore('#rejN','#rejFill',data.length);
+    data.forEach(function(d,i){
+      var w=document.createElement('div'); w.className='q-item';
+      w.innerHTML='<p class="q-text"><span class="num">'+String(i+1).padStart(2,'0')+'</span>Your test returns <strong>p = '+d.p+'</strong>. What do you conclude?</p><div class="opts"></div><div class="fb"></div>';
+      host.appendChild(w);
+      var box=$('.opts',w), fb=$('.fb',w), done=false;
+      ['Reject the null','Fail to reject the null','Accept the null'].forEach(function(o){
+        var b=document.createElement('button'); b.textContent=o;
+        b.addEventListener('click',function(){
+          if(done)return; done=true;
+          var ok=o===d.a;
+          $$('button',box).forEach(function(x){x.disabled=true; if(x.textContent===d.a)x.classList.add('right')});
+          if(!ok)b.classList.add('wrong');
+          fb.className='fb show '+(ok?'y':'n');
+          var extra = (o==='Accept the null') ? ' <em>And there is no “accept” — that option should never be on the table.</em>' : '';
+          fb.innerHTML='<strong>'+(ok?'Correct — ':'It’s “')+d.a+(ok?'.':'.”')+'</strong> '+d.why+extra;
+          if(ok)bump();
+        });
+        box.appendChild(b);
+      });
+    });
+  }
+  $('#rejReset').addEventListener('click',build); build();
+})();
+
+})();
+</script>
+</body>
+</html>
